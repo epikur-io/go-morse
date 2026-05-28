@@ -2,13 +2,30 @@ package morse
 
 import (
 	"encoding/json"
+	"io"
 	"math"
 	"os"
 	"strings"
 	"testing"
 
+	_ "embed"
+
 	"golang.org/x/text/unicode/norm"
 )
+
+func readTestFile(t *testing.T, f string) string {
+	fh, err := os.Open(f)
+	if err != nil {
+		t.Errorf("failed to open %q test file: %s", f, err)
+		return ""
+	}
+	v, err := io.ReadAll(fh)
+	if err != nil {
+		t.Errorf("failed to read %q test file: %s", f, err)
+		return ""
+	}
+	return string(v)
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -42,6 +59,31 @@ func writeCustomTableFile(t *testing.T, content string) string {
 	}
 	t.Cleanup(func() { os.Remove(f.Name()) })
 	return f.Name()
+}
+
+// ---------------------------------------------------------------------------
+// Check test data fixtures
+// ---------------------------------------------------------------------------
+
+func TestFixtures(t *testing.T) {
+	input := readTestFile(t, "testdata/input_raw.txt")
+	expected := readTestFile(t, "testdata/input_encoded.txt")
+
+	spec := ituSpec()
+	ct := BuildCodeTable(spec)
+
+	// Mutate the spec after sealing.
+	spec.encodeMap['A'] = "mutated"
+	delete(spec.encodeMap, 'E')
+
+	// The sealed table must still encode A and E correctly.
+	got, err := ct.EncodeLine(input)
+	if err != nil {
+		t.Errorf("failed to encode %q: %s", input, err)
+	}
+	if got != expected {
+		t.Errorf("expected %q but got %q", expected, got)
+	}
 }
 
 // ---------------------------------------------------------------------------
