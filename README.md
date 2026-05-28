@@ -36,7 +36,7 @@ Can be used as a **Go library** or as a **command-line tool**.
 - [Supported Characters](#supported-characters)
 - [Project Structure](#project-structure)
 - [Development](#development)
-- [License](#license)
+- [Disclaimer](#disclaimer)
 
 ---
 
@@ -627,3 +627,11 @@ go test -run TestGermanRoundTrip ./...
 # Build the CLI
 go build -o morse ./cmd/morse
 ```
+
+---
+
+## Disclaimer
+
+This project was developed with partial assistance from artificial intelligence tools (Claude Sonnet 4.6). AI was used to help generate, refine, and review portions of the code and documentation. All outputs have been reviewed and edited by the project maintainers; however, users should be aware that AI-assisted content may still contain inaccuracies, omissions, or unintended behavior.
+
+The maintainers remain responsible for the final content and encourage users to verify critical functionality before use in production environments.
