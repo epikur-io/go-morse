@@ -973,7 +973,7 @@ func TestValidateWavParamsOverflowThreshold(t *testing.T) {
 	// We verify the guard fires at math.MaxInt by choosing parameters whose
 	// product is just over the limit.
 	//
-	// On 64-bit: MaxInt = 9_223_372_036_854_775_807 — we can't reach it with
+	// On 64-bit: MaxInt = 9_223_372_036_854_775_807 - we can't reach it with
 	// realistic SampleRate/DotMs values, so we only check that a deliberately
 	// overflowing pair is rejected and that the error mentions "overflow".
 	if math.MaxInt == math.MaxInt32 {

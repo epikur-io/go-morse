@@ -123,7 +123,7 @@ if err := ct.Decode(f, os.Stdout); err != nil {
 ### WAV Generation
 
 `GenerateWAV` renders plain text or pre-encoded Morse into a 16-bit mono
-PCM WAV file. Pass any `io.Writer` — when the writer also implements
+PCM WAV file. Pass any `io.Writer` - when the writer also implements
 `io.WriteSeeker` (e.g. `*os.File`) the WAV is written directly; otherwise a
 temporary file is used transparently.
 
@@ -167,7 +167,7 @@ morse.GenerateWAV(strings.NewReader("... --- ..."), f, p, ct)
 Pass a language ID to `ResolveTable`:
 
 ```go
-// German — includes Ä, Ö, Ü, ß, and the SCH trigraph.
+// German - includes Ä, Ö, Ü, ß, and the SCH trigraph.
 ct, _ := morse.ResolveTable("de", "")
 code, _ := ct.EncodeLine("SCHÖNE GRÜßE")
 
@@ -175,7 +175,7 @@ code, _ := ct.EncodeLine("SCHÖNE GRÜßE")
 ct, _ = morse.ResolveTable("ru", "")
 code, _ = ct.EncodeLine("МОСКВА")
 
-// Chinese — digits and Latin only; use CTC 4-digit codes for Hanzi.
+// Chinese - digits and Latin only; use CTC 4-digit codes for Hanzi.
 ct, _ = morse.ResolveTable("zh", "")
 code, _ = ct.EncodeLine("4919 1072") // 你(4919) 好(1072)
 ```
@@ -212,7 +212,7 @@ ct := morse.BuildCodeTable(spec)
 // ct is now a sealed, immutable *CodeTable.
 ```
 
-`LookupLang` and `MergeCustomTable` never mutate their inputs — each returns
+`LookupLang` and `MergeCustomTable` never mutate their inputs - each returns
 a freshly deep-copied spec.
 
 ### API Reference
@@ -305,7 +305,7 @@ echo "---- ---. -. ." | morse decode -lang de
 # SCHÖNE  (first word only)
 ```
 
-Accepts flexible word separators — `/` with any surrounding whitespace
+Accepts flexible word separators - `/` with any surrounding whitespace
 (e.g. `" / "`, `"/"`, `"  /  "`, tabs).
 
 ### wav
@@ -399,7 +399,7 @@ Based on the ITU table with DARC/IARU Region 1 conventions:
 - **Ä** `.-.-` · **Ö** `---.` · **Ü** `..--` · **ß** `...---.`
 - `SCH` is a trigraph encoded as `----`, matched with priority over individual letters via longest-match
 - Decoding `----` produces `SCH` (not `Ĥ` as in plain ITU)
-- The `CH` digraph is removed — bare `C` and `H` encode as individual letters
+- The `CH` digraph is removed - bare `C` and `H` encode as individual letters
 
 ```bash
 echo "SCHÖNE GRÜßE" | morse encode -lang de
@@ -420,7 +420,7 @@ Cyrillic letter maps to the same dot-dash pattern as its nearest Latin
 equivalent by operator convention, so the rhythm is identical to ITU Morse.
 
 > **Note:** Ё shares the sequence `.` with Е. Ё is accepted on input but
-> decodes back as Е — this is standard practice.
+> decodes back as Е - this is standard practice.
 
 ```bash
 echo "МОСКВА" | morse encode -lang ru
@@ -442,11 +442,11 @@ Chinese Morse (大陆电码) is a two-stage system:
 2. Transmit those digits as standard Morse numerals.
 
 The `zh` table covers digits and Latin letters for this purpose. A full
-Hanzi↔CTC dictionary is not bundled — use a custom JSON table to add
+Hanzi↔CTC dictionary is not bundled - use a custom JSON table to add
 specific characters you need.
 
 ```bash
-# 你(4919) 好(1072) — operator looks up CTC codes, then sends digits
+# 你(4919) 好(1072) - operator looks up CTC codes, then sends digits
 echo "4919 1072" | morse encode -lang zh
 # ....- ----. .---- ----. / .---- ----- --... ..---
 ```
@@ -483,7 +483,7 @@ Any language table can be extended or overridden with a JSON file.
 | `digraphs` | Multi-character string → Morse sequence. Matched longest-first during encoding. |
 | `priority` | Decode tie-break order. Earlier = higher priority. Replaces the language default when provided. |
 
-The custom file is **merged on top** of the selected language — only the
+The custom file is **merged on top** of the selected language - only the
 keys you specify are overridden. The input spec is never mutated; each merge
 produces an independent deep copy.
 
@@ -555,7 +555,7 @@ Set `FadeMs: 0` to disable.
 WAV generation is fully streaming: each Morse symbol is rendered into a
 small reusable buffer and written incrementally to the encoder. Peak memory
 is bounded by the longest single symbol (one dash or one inter-word gap),
-not the total recording length — hour-long recordings do not require
+not the total recording length - hour-long recordings do not require
 hundreds of MB of RAM.
 
 ### Seekable vs non-seekable output
@@ -570,7 +570,7 @@ on completion.
 
 ## Supported Characters
 
-### ITU-R M.1677-1 — Basic (Table 1)
+### ITU-R M.1677-1 - Basic (Table 1)
 
 ```
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
@@ -578,7 +578,7 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 . , ? ' ! / ( ) & : ; = + - _ " $ @
 ```
 
-### ITU-R M.1677-1 — Extended European (Annex 1)
+### ITU-R M.1677-1 - Extended European (Annex 1)
 
 ```
 À Á Ä Å Æ Ç Ć Ð É È Ê Ĝ Ĥ Ĵ Ł Ñ Ń Ó Ö Ø Ś Š Þ Ü Ŭ Ź Ż

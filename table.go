@@ -80,7 +80,7 @@ func BuildCodeTable(spec tableSpec) *CodeTable {
 	encodeMap := cloneRuneStringMap(spec.encodeMap)
 	digraphs := cloneStringStringMap(spec.digraphs)
 
-	// Priority map — first occurrence wins; duplicates ignored.
+	// Priority map - first occurrence wins; duplicates ignored.
 	prio := make(map[rune]int, len(spec.decodePriority))
 	for i, r := range spec.decodePriority {
 		if _, already := prio[r]; !already {
@@ -134,7 +134,7 @@ func BuildCodeTable(spec tableSpec) *CodeTable {
 //
 // Order of operations:
 //  1. NFC-normalise so ToUpper operates on canonical forms.
-//  2. ToUpper — case conversion can alter normalisation form.
+//  2. ToUpper - case conversion can alter normalisation form.
 //  3. NFC-normalise again to restore canonical form after casing.
 func normAndUpper(s string) string {
 	return norm.NFC.String(strings.ToUpper(norm.NFC.String(s)))
