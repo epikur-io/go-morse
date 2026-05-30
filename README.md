@@ -445,6 +445,9 @@ The `zh` table covers digits and Latin letters for this purpose. A full
 Hanzi↔CTC dictionary is not bundled - use a custom JSON table to add
 specific characters you need.
 
+You can also find a `chinese unicode character`
+ to `numeric morse code` translation at: [https://github.com/epikur-io/chinese-morse-code-table](https://github.com/epikur-io/chinese-morse-code-table)
+
 ```bash
 # 你(4919) 好(1072) - operator looks up CTC codes, then sends digits
 echo "4919 1072" | morse encode -lang zh
